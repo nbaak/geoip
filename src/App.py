@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from flask import Flask,jsonify
+from flask import Flask, jsonify, request
 from Geoip import Geoip
 
 
@@ -8,9 +8,15 @@ app = Flask(__name__)
 
 
 
-@app.route("/find/<string:ip>")
+@app.route("/", defaults={'ip': None})
+@app.route("/<string:ip>")
 def find(ip):
+    print("IP", type(ip), ip)
+    if ip == None:
+        ip = request.remote_addr
+    
     data = geoip.search(ip)
+        
     return jsonify(data)
 
 if __name__ == "__main__":

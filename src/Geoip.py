@@ -32,7 +32,7 @@ class Geoip:
         
         for data in self.data:
             if int_ip >= data['start'] and int_ip <= data['stop']:
-                return {"code": data['code'], "country": data['country']}
+                return {"code": data['code'], "country": data['country'], "ip": ip}
             
         return None
     

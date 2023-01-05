@@ -27,7 +27,7 @@ class Geoip:
         a3,a2,a1,a0 = int(a3),int(a2),int(a1),int(a0)
         return 256**3*a3 + 256**2*a2 + 256*a1 + a0
             
-    def search(self, ip):
+    def search(self, ip:str):
         int_ip = self.ip_int(ip)
         
         for data in self.data:

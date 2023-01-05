@@ -14,7 +14,10 @@ app = Flask(__name__)
 @app.route("/<string:ip>")
 def find(ip):
     if ip == None:
-        ip = request.remote_addr
+        if 'HTTP_X_FORWARDED_FOR' in request.environ:
+            ip = request.environ['HTTP_X_FORWARDED_FOR']
+        elif 'REMOTE_ADDR' in request.environ:
+            ip = request.remote_addr
 
     data = geoip.search(ip)
 

@@ -3,7 +3,7 @@ version: '3.1'
 services:
   geoip:
     build: .
-    image: k3nny/geoip
+    image: k3nny0r/geoip
     container_name: geoip
     ports:
     - 127.0.0.1:5000:5000

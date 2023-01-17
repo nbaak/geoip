@@ -6,6 +6,6 @@ services:
     image: k3nny0r/geoip
     container_name: geoip
     ports:
-    - 127.0.0.1:5000:5000
+    - 127.0.0.1:22223:22223
     restart: always
 

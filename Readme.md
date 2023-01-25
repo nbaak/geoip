@@ -3,5 +3,5 @@ To analyze the ssh tarpit data, I needed a correlation between ip-addresses and 
 
 The basedata for this service is provided by <a href="https://www.ip2location.com/developers/python">ip2locaion.com</a>.
 
-## IP2LOCATION
-If you want to use the data from <a href="https://www.ip2location.com/developers/python">ip2locaion.com</a> you need to register your self and download the ip data. You can create your own geoip.bin file with the `create_data.py` script. This might be a good idea because I don't know when my added `geoip.bin` file is outdated.
+## Create your own geoip.bin
+If you want to use the data from <a href="https://lite.ip2location.com/database/ip-country-region-city">lite.ip2locaion.com</a> you need to register your self and download the ip data (IP-COUNTRY-REGION-CITY). You can create your own geoip.bin file with the `create_data.py` script. 

@@ -3,7 +3,7 @@ import pickle
 
 class Geoip:
     
-    def __init__(self, file="geoip.bin"):
+    def __init__(self, file='geoip.bin'):
         try:
             with open(file, 'rb') as fp:
                 self.data = pickle.load(fp)
@@ -12,7 +12,7 @@ class Geoip:
             
     def test(self):
         print()
-        print("test..")
+        print('test..')
         if self.data:
             print(len(self.data))
             print(self.data[0])
@@ -20,7 +20,7 @@ class Geoip:
             print(self.data[10000])
             print()
         else:
-            print("no data found..")
+            print('no data found..')
     
     def ip_int(self, ip:str) -> int:
         a3,a2,a1,a0 = ip.split('.')
@@ -32,16 +32,16 @@ class Geoip:
         
         for data in self.data:
             if int_ip >= data['start'] and int_ip <= data['stop']:
-                return {"code": data['code'], "country": data['country'], "ip": ip}
+                return {'code': data['code'], 'country': data['country'], 'region': data['region'],'city': data['city'], 'ip': ip}
             
         return None
     
     
-if __name__ == "__main__":
+if __name__ == '__main__':
     ## test it..
     geoip = Geoip()
     geoip.test()
-    print(geoip.search("61.177.173.39"))
+    print(geoip.search('61.177.173.39'))
     
     
     

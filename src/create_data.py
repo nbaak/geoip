@@ -6,9 +6,9 @@ import csv
 def create() -> list:
     geodata = []
 
-    with open("IP2LOCATION-LITE-DB1.CSV", 'r') as fp:
-        for start, stop, code, country in csv.reader(fp):
-            data = {'start': int(start), 'stop': int(stop), 'code': code, 'country': country}
+    with open("geodata/IP2LOCATION-LITE-DB3.CSV", 'r') as fp:
+        for start, stop, code, country, region, city in csv.reader(fp):
+            data = {'start': int(start), 'stop': int(stop), 'code': code, 'country': country, 'region': region, 'city': city}
             geodata.append(data)
 
     with open("geoip.bin", "wb") as fp:
@@ -19,11 +19,11 @@ def create() -> list:
 
 def test(geodata:list):
     print('testing...')
-    print(len(geodata) == 215134)
-    print(geodata[0]['stop'] == 16777215 and geodata[0]['code'] == '-', geodata[0])
-    print(geodata[10]['stop'] == 16843263 and geodata[10]['code'] == 'US', geodata[10])
-    print(geodata[1000]['stop'] == 37394431 and geodata[1000]['code'] == 'NL', geodata[1000])
-    print(geodata[10000]['stop'] == 390643711 and geodata[10000]['code'] == 'AU', geodata[10000])
+    print(len(geodata))
+    print(geodata[0])
+    print(geodata[10])
+    print(geodata[1000])
+    print(geodata[10000])
 
 
 def main():

@@ -4,11 +4,17 @@ import pickle
 class Geoip:
     
     def __init__(self, file='geoip.bin'):
+        self.file = file
+        self.load_data()
+            
+    def load_data(self) -> bool:
         try:
-            with open(file, 'rb') as fp:
+            with open(self.file, 'rb') as fp:
                 self.data = pickle.load(fp)
+            return True
         except:
             self.data = None
+            return False
             
     def test(self):
         print()

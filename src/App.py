@@ -1,13 +1,21 @@
 #!/usr/bin/env python3
 from flask import Flask, jsonify, request
 from Geoip import Geoip
-import pathlib
 import os
+import settings
+import secret_service
 
-THIS_PATH = pathlib.Path(__file__).parent.resolve()
-
-geoip = Geoip(os.path.join(THIS_PATH, 'geoip.bin'))
+geoip = Geoip(os.path.join(settings.THIS_PATH, 'geoip.bin'))
 app = Flask(__name__)
+
+
+@app.route('/update/<string:secret>')
+def update(secret):
+    if secret_service.verify(secret, settings.SECRET_FILE):
+        if geoip.load_data():
+            return "Data loaded", 200
+
+    return "ERROR", 404
 
 
 @app.route("/", defaults={'ip': None})
@@ -25,5 +33,5 @@ def find(ip):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=22223)
+    app.run(host="0.0.0.0", port=settings.port)
 

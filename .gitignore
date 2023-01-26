@@ -3,4 +3,5 @@
 *.bin
 *.csv
 *.CSV
+*.secret
 __pycache__

@@ -3,5 +3,13 @@ To analyze the ssh tarpit data, I needed a correlation between ip-addresses and 
 
 The basedata for this service is provided by <a href="https://www.ip2location.com/developers/python">ip2locaion.com</a>.
 
+
 ## Create your own geoip.bin
-If you want to use the data from <a href="https://lite.ip2location.com/database/ip-country-region-city">lite.ip2locaion.com</a> you need to register your self and download the ip data (IP-COUNTRY-REGION-CITY). You can create your own geoip.bin file with the `create_data.py` script. 
+You need to create an account at <a href="https://lite.ip2location.com/download-database">lite.ip2locaion.com</a>. There you will find your Download Token. The download token is needed for the application to download the latest version of the database file.
+Copy the Token into the geoip.env file and replace the placeholder string. Now run `docker-compose up -d`.
+
+If you don't replace the placeholder string, the container will use an outdated version of the geoip data.
+
+
+## IP2LOCATION
+This site or product includes IP2Location LITE data available from http://www.ip2location.com.

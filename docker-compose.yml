@@ -5,7 +5,9 @@ services:
     build: .
     image: k3nny0r/geoip
     container_name: geoip
+    env_file:
+      - ./geoip.env
     ports:
-    - 127.0.0.1:22223:22223
+      - 127.0.0.1:22223:22223
     restart: always
 

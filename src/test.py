@@ -4,38 +4,7 @@ from Geoip import Geoip
 import time
 import logging
 import sys
-
-
-def progressBar(iterable, total:int=None, prefix='', suffix='', decimals=1, length=100, fill='█', printEnd="\r"):
-    """
-    Call in a loop to create terminal progress bar
-    https://stackoverflow.com/questions/3173320/text-progress-bar-in-terminal-with-block-characters
-    @params:
-        iterable    - Required  : iterable object (Iterable)
-        prefix      - Optional  : prefix string (Str)
-        suffix      - Optional  : suffix string (Str)
-        decimals    - Optional  : positive number of decimals in percent complete (Int)
-        length      - Optional  : character length of bar (Int)
-        fill        - Optional  : bar fill character (Str)
-        printEnd    - Optional  : end character (e.g. "\r", "\r\n") (Str)
-    """
-    total = len(iterable) if total == None else total
-
-    # Progress Bar Printing Function
-    def printProgressBar (iteration):
-        percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
-        filledLength = int(length * iteration // total)
-        bar = fill * filledLength + '-' * (length - filledLength)
-        print(f'\r{prefix} |{bar}| {percent}% {suffix}', end=printEnd)
-
-    # Initial Call
-    printProgressBar(0)
-    # Update Progress Bar
-    for i, item in enumerate(iterable):
-        yield item
-        printProgressBar(i + 1)
-    # Print New Line on Complete
-    print()
+from tqdm import tqdm
 
 
 def ip_generator():
@@ -93,7 +62,8 @@ def test_all_ips(geoip:Geoip):
     start_main = time.time()
 
     # logging.info("testing: ", ip, counter)
-    for ip in progressBar(ip_generator(), 255**4):
+    # for ip in progressBar(ip_generator(), 255**4):
+    for ip in tqdm(ip_generator(), total=255**4):
         geoip.search(ip)
         counter += 1
 

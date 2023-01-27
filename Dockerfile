@@ -12,4 +12,4 @@ ADD ./crontab/crontab /
 RUN crontab /crontab
 
 EXPOSE 22223
-ENTRYPOINT ["/geoip/App.py"]
+ENTRYPOINT ["/geoip/start.sh"]

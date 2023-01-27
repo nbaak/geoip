@@ -1,9 +1,41 @@
-
+#!/usr/bin/env python3
 
 from Geoip import Geoip
 import time
 import logging
 import sys
+
+
+def progressBar(iterable, total:int=None, prefix='', suffix='', decimals=1, length=100, fill='█', printEnd="\r"):
+    """
+    Call in a loop to create terminal progress bar
+    https://stackoverflow.com/questions/3173320/text-progress-bar-in-terminal-with-block-characters
+    @params:
+        iterable    - Required  : iterable object (Iterable)
+        prefix      - Optional  : prefix string (Str)
+        suffix      - Optional  : suffix string (Str)
+        decimals    - Optional  : positive number of decimals in percent complete (Int)
+        length      - Optional  : character length of bar (Int)
+        fill        - Optional  : bar fill character (Str)
+        printEnd    - Optional  : end character (e.g. "\r", "\r\n") (Str)
+    """
+    total = len(iterable) if total == None else total
+
+    # Progress Bar Printing Function
+    def printProgressBar (iteration):
+        percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
+        filledLength = int(length * iteration // total)
+        bar = fill * filledLength + '-' * (length - filledLength)
+        print(f'\r{prefix} |{bar}| {percent}% {suffix}', end=printEnd)
+
+    # Initial Call
+    printProgressBar(0)
+    # Update Progress Bar
+    for i, item in enumerate(iterable):
+        yield item
+        printProgressBar(i + 1)
+    # Print New Line on Complete
+    print()
 
 
 def ip_generator():
@@ -35,7 +67,7 @@ def test_some_ips(geoip:Geoip):
     print(geoip.data[len(geoip.data) - 1])
     print()
 
-    print('test_all_ips ips:')
+    print('test some ips:')
     start = time.time()
     print(geoip.search('0.0.0.0'))
     print(geoip.search('77.64.141.242'))
@@ -59,8 +91,9 @@ def test_all_ips(geoip:Geoip):
     print("testing ALL ip v4 addresses")
     counter = 0
     start_main = time.time()
-    for ip in ip_generator():
-        logging.info("testing: ", ip, counter)
+
+    # logging.info("testing: ", ip, counter)
+    for ip in progressBar(ip_generator(), 255**4):
         geoip.search(ip)
         counter += 1
 
@@ -75,11 +108,11 @@ if __name__ == "__main__":
                         level=logging.WARN)
 
     geoip = Geoip()
-    
+
     test_geoip_basic(geoip)
-    
+
     test_some_ips(geoip)
-    
+
     if len(sys.argv) > 1:
         test_all_ips(geoip)
-    
+

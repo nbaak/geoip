@@ -46,6 +46,9 @@ class Geoip:
             print(self.data[0])
             print(self.data[1000])
             print(self.data[10000])
+            print(self.data[3109495])
+            print(self.data[3109496])
+            
             print(self.data[len(self.data) - 1])
             print()
 
@@ -59,7 +62,11 @@ class Geoip:
             print(self.search('193.3.19.178'))
             print(self.search('118.37.244.77'))
             print(self.search('61.177.173.39'))
+            # print(self.search2('61.177.173.39'))
+            
+            
             print(self.search('224.0.0.0'))
+            # print(self.search2('224.0.0.0'))
             t1 = time.time()-start
             print(f"searching took {t1}s")
             print()
@@ -106,26 +113,26 @@ class Geoip:
             if int_ip >= self.data[lower_bounds[0]]['start'] and int_ip < self.data[lower_bounds[1]]['stop']:
                 # go left
                 # print('left', int_ip, center_index, self.data[lower_bounds[0]]['start'], self.data[lower_bounds[1]]['stop'], self.data[upper_bounds[0]]['start'], self.data[upper_bounds[1]]['stop'])
-                center_index = (lower_bounds[0] + center_index) // 2
+                center_index = ((lower_bounds[0] + center_index) // 2)
                 upper_bounds = [center_index, lower_bounds[1]]
                 lower_bounds = [lower_bounds[0], center_index]
-                # print('left n', int_ip, center_index, self.data[lower_bounds[0]]['start'], self.data[lower_bounds[1]]['stop'], self.data[upper_bounds[0]]['start'], self.data[upper_bounds[1]]['stop'])
+                # print('left n', int_ip, '|', self.data[lower_bounds[0]]['start'], self.data[lower_bounds[1]]['stop'], '|', self.data[upper_bounds[0]]['start'], self.data[upper_bounds[1]]['stop'])
 
             elif int_ip >= self.data[upper_bounds[0]]['start'] and int_ip < self.data[upper_bounds[1]]['stop']:
                 # go right
                 # print('right', int_ip, center_index, self.data[lower_bounds[0]]['start'], self.data[lower_bounds[1]]['stop'], self.data[upper_bounds[0]]['start'], self.data[upper_bounds[1]]['stop'])
-                center_index = (upper_bounds[1] + center_index) // 2
+                center_index = ((upper_bounds[1] + center_index) // 2) +1
                 lower_bounds = [upper_bounds[0], center_index]
                 upper_bounds = [center_index, upper_bounds[1]]
-                # print('right n', int_ip, center_index, self.data[lower_bounds[0]]['start'], self.data[lower_bounds[1]]['stop'], self.data[upper_bounds[0]]['start'], self.data[upper_bounds[1]]['stop'])
+                # print('right n', int_ip, '|', self.data[lower_bounds[0]]['start'], self.data[lower_bounds[1]]['stop'], '|', self.data[upper_bounds[0]]['start'], self.data[upper_bounds[1]]['stop'])
             
             if trys > 50:
+                print("fallback")
                 return self.search_old(ip)
             
             trys += 1
         return None
-
-
+   
 if __name__ == '__main__':
     # # test it..
     geoip = Geoip()

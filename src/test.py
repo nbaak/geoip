@@ -58,14 +58,10 @@ def test_some_ips(geoip:Geoip):
 
 def test_all_ips(geoip:Geoip):
     print("testing ALL ip v4 addresses")
-    counter = 0
     start_main = time.time()
 
-    # logging.info("testing: ", ip, counter)
-    # for ip in progressBar(ip_generator(), 255**4):
     for ip in tqdm(ip_generator(), total=255**4):
         geoip.search(ip)
-        counter += 1
 
     stop_main = time.time()
 

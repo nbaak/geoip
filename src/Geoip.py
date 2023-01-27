@@ -84,8 +84,6 @@ class Geoip:
                 lower_bounds = [upper_bounds[0], center_index]
                 upper_bounds = [center_index, upper_bounds[1]]
             
-            print('-->', int_ip, '|', self.data[lower_bounds[0]]['start'], self.data[lower_bounds[1]]['stop'], '|', self.data[upper_bounds[0]]['start'], self.data[upper_bounds[1]]['stop'])
-                
             if trys > 150:
                 logging.warning(f"fallback for {ip}")
                 return self.search_slow(ip)

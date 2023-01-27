@@ -6,13 +6,18 @@ import pathlib
 import os
 import settings
 import requests
+import logging
 
 
 def send_to_service():
     r = requests.get(f'http://127.0.0.1:{settings.port}/update/{settings.secret}')
     if r.status_code == 200:
+        logging.info("successful loaded new data.")
         return True
+    
+    logging.info("failed to load new data.")
     return False
+
 
 def create_database():
     this_path = pathlib.Path(__file__).parent.resolve()

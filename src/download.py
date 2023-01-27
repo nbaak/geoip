@@ -2,6 +2,7 @@ import settings
 import requests, zipfile, io
 import pathlib
 import os
+import logging
 
 
 def download_and_unpack(download_dir:str):
@@ -9,21 +10,23 @@ def download_and_unpack(download_dir:str):
         os.makedirs(download_dir)
     
     if not settings.try_download:
-        print("download databse is disabled")
+        logging.info("download databse is disabled")
         exit()
         
     r = requests.get(settings.downlaod_url)
     try:
         z = zipfile.ZipFile(io.BytesIO(r.content))
         z.extractall(download_dir)
+        logging.info('downloaded and unpacked new csv files')
     except:
-        print(f'could not download the geoip database from {settings.downlaod_url}')
+        logging.info(f'could not download the geoip database from {settings.downlaod_url}')
 
 
 def purge_files(folder:str, files:list):
     for file in files:
         if os.path.exists(os.path.join(folder, file)):
             os.remove(os.path.join(folder, file))
+            logging.info(f'removed file: {folder}/{file}')
 
 
 def main():

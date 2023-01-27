@@ -59,21 +59,22 @@ class Geoip:
             print(geoip.search('193.3.19.178'))
             print(geoip.search('118.37.244.77'))
             print(geoip.search('61.177.173.39'))
+            print(geoip.search('224.0.0.0'))
             t1 = time.time()-start
             print(f"searching took {t1}s")
-            print()
-            start = time.time()
-            print(geoip.search_old('77.64.141.242'))
-            print(geoip.search_old('14.49.113.37'))
-            print(geoip.search_old('61.177.173.13'))
-            print(geoip.search_old('61.177.172.91'))
-            print(geoip.search_old('146.0.75.2'))
-            print(geoip.search_old('193.3.19.178'))
-            print(geoip.search_old('118.37.244.77'))
-            print(geoip.search_old('61.177.173.39'))
-            t2 = time.time()-start
-            print(f"searching took {t2}s")
-            print(t2/t1)
+            # print()
+            # start = time.time()
+            # print(geoip.search_old('77.64.141.242'))
+            # print(geoip.search_old('14.49.113.37'))
+            # print(geoip.search_old('61.177.173.13'))
+            # print(geoip.search_old('61.177.172.91'))
+            # print(geoip.search_old('146.0.75.2'))
+            # print(geoip.search_old('193.3.19.178'))
+            # print(geoip.search_old('118.37.244.77'))
+            # print(geoip.search_old('61.177.173.39'))
+            # t2 = time.time()-start
+            # print(f"searching took {t2}s")
+            # print(t2/t1)
             print()
         else:
             print('no data found..')
@@ -106,6 +107,8 @@ class Geoip:
         center_index = len(self.data) // 2
         lower_bounds = [0, center_index]
         upper_bounds = [center_index, len(self.data)-1]
+        
+        trys = 0
 
         while True:
             data = self.data[center_index]
@@ -128,7 +131,11 @@ class Geoip:
                 lower_bounds = [upper_bounds[0], center_index]
                 upper_bounds = [center_index, upper_bounds[1]]
                 # print('right n', int_ip, center_index, self.data[lower_bounds[0]]['start'], self.data[lower_bounds[1]]['stop'], self.data[upper_bounds[0]]['start'], self.data[upper_bounds[1]]['stop'])
-
+            
+            if trys > 50:
+                return self.search_old(ip)
+            
+            trys += 1
         return None
 
 

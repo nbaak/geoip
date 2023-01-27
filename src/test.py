@@ -15,12 +15,19 @@ def ip_creator():
 def test():
     geoip = Geoip()
     
+    print("starting test..")
+    geoip.test()
+    
+    
+    print("testing ALL ip v4 addresses")
+    counter = 0
     start_main = time.time()
     for ip in ip_creator():
+        print("testing: ", ip, counter)
         data = geoip.search(ip)
         # print(data)
         # time.sleep(.25)
-        
+        counter += 1
         
     stop_main = time.time()
     

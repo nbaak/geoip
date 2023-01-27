@@ -96,6 +96,5 @@ if __name__ == '__main__':
     logging.basicConfig(format='%(message)s',
                         encoding='utf-8',
                         level=logging.INFO)
-    # # test_all_ips it..
     geoip = Geoip()
 

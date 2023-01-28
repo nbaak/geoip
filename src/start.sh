@@ -1,4 +1,8 @@
 #!/bin/bash
 
-/etc/init.d/cron start
-/geoip/App.py
+
+THIS_DIR=$(dirname $(readlink -f $0))
+
+/etc/init.d/cron start & 
+
+python3 ${THIS_DIR}/App.py

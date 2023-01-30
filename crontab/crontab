@@ -1,2 +1,2 @@
 
-0 0 * * *  /geoip/update_database.py
+0 0 * * * /usr/local/bin/python3 /geoip/update_database.py

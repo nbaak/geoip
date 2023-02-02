@@ -3,7 +3,6 @@ import pickle
 import logging
 from binascii import hexlify
 import socket
-from torch.utils import _zip
 import time
 
 

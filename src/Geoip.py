@@ -134,8 +134,9 @@ if __name__ == '__main__':
     for ip in ips:
         print(geoip.search(ip))
     
+    print()
     # v6 quick test
-    ips = ['fe80::021b:77ff:fbd6:7860', '2001:4860:4860::8888']
+    ips = ['fe80::021b:77ff:fbd6:7860', '2001:4860:4860::8888', '2a02:8108:9c0:3788:754c:3142:cbdb:9ac', '2a02:2028:1038:1::34']
     for ip in ips:
         print(geoip.search(ip))
 

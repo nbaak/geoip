@@ -25,18 +25,17 @@ def test_geoip_basic(geoip:Geoip):
         print('no data_v4 found..')
 
 
-def test_some_ips(geoip:Geoip):
+def test_ip_v4_search(geoip:Geoip):
+    print('test ip v5 addresses')
     print(len(geoip.data_v4))
     print(geoip.data_v4[0])
     print(geoip.data_v4[1000])
     print(geoip.data_v4[10000])
-    print(geoip.data_v4[3109495])
-    print(geoip.data_v4[3109496])
+    print(geoip.data_v4[-1])
 
     print(geoip.data_v4[len(geoip.data_v4) - 1])
     print()
-
-    print('test some ips:')
+    
     start = time.time()
     print(geoip.search('0.0.0.0'))
     print(geoip.search('77.64.141.242'))
@@ -54,9 +53,21 @@ def test_some_ips(geoip:Geoip):
     t1 = time.time() - start
     print(f"searching took {t1}s")
     print()
+    
+    
+def test_ip_v6_search(geoip:Geoip):
+    print("test ip v6 addresses")
+    
+    ips = ['fe80::021b:77ff:fbd6:7860', '2001:4860:4860::8888', '2a02:8108:9c0:3788:754c:3142:cbdb:9ac', '2a02:2028:1038:1::34']
+    start = time.time()
+    for ip in ips:
+        print(geoip.search(ip))
+    stop = time.time()
+    print(f"searching took {stop-start}s")
+    print()
+     
 
-
-def test_all_ips(geoip:Geoip):
+def test_all_ip_v4(geoip:Geoip):
     print("testing ALL ip v4 addresses")
     start_main = time.time()
 
@@ -65,7 +76,7 @@ def test_all_ips(geoip:Geoip):
 
     stop_main = time.time()
 
-    print(f"test_all_ips took: {stop_main - start_main}s")
+    print(f"test_all_ip_v4 took: {stop_main - start_main}s")
 
 
 if __name__ == "__main__":
@@ -73,12 +84,14 @@ if __name__ == "__main__":
                         encoding='utf-8',
                         level=logging.WARN)
 
-    geoip = Geoip()
+    geoip = Geoip('geoip.bin', 'geoip_v6.bin')
 
     test_geoip_basic(geoip)
 
-    test_some_ips(geoip)
+    test_ip_v4_search(geoip)
+    
+    test_ip_v6_search(geoip)
 
     if len(sys.argv) > 1:
-        test_all_ips(geoip)
+        test_all_ip_v4(geoip)
 

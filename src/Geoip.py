@@ -12,18 +12,21 @@ class Geoip:
     def __init__(self, file='geoip.bin'):
         self.file = file
         self.load_data()
+        
+    def _load_data(self, file) -> bool:
+        try:
+            with open(file, 'rb') as fp:
+                data = pickle.load(fp)
+
+            data.sort(key=lambda x: x['start'])
+
+            return data
+        except:
+            return None
 
     def load_data(self) -> bool:
-        try:
-            with open(self.file, 'rb') as fp:
-                self.data_v4 = pickle.load(fp)
-
-            self.data_v4.sort(key=lambda x: x['start'])
-
-            return True
-        except:
-            self.data_v4 = None
-            return False
+        self.data_v4 = self._load_data(self.file)
+        # self.data_v6 = self._load_data(self.file_v6)
 
     def check_data(self):
         value = -1

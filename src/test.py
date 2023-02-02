@@ -17,23 +17,23 @@ def ip_generator():
 
 def test_geoip_basic(geoip:Geoip):
     print("Basic test - integrity")
-    if geoip.data:
+    if geoip.data_v4:
         if geoip.check_data():
-            print('data is consecutive')
+            print('data_v4 is consecutive')
 
     else:
-        print('no data found..')
+        print('no data_v4 found..')
 
 
 def test_some_ips(geoip:Geoip):
-    print(len(geoip.data))
-    print(geoip.data[0])
-    print(geoip.data[1000])
-    print(geoip.data[10000])
-    print(geoip.data[3109495])
-    print(geoip.data[3109496])
+    print(len(geoip.data_v4))
+    print(geoip.data_v4[0])
+    print(geoip.data_v4[1000])
+    print(geoip.data_v4[10000])
+    print(geoip.data_v4[3109495])
+    print(geoip.data_v4[3109496])
 
-    print(geoip.data[len(geoip.data) - 1])
+    print(geoip.data_v4[len(geoip.data_v4) - 1])
     print()
 
     print('test some ips:')

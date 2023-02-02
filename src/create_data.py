@@ -5,7 +5,7 @@ import os
 import pathlib
 
 
-def create(geoip_db) -> list:
+def create(geoip_db, bin_file='geoip.bin') -> list:
     geodata = []
 
     with open(geoip_db, 'r') as fp:
@@ -13,7 +13,7 @@ def create(geoip_db) -> list:
             data = {'start': int(start), 'stop': int(stop), 'code': code, 'country': country, 'region': region, 'city': city}
             geodata.append(data)
 
-    with open(os.path.join(pathlib.Path(geoip_db).parent.parent, 'geoip.bin'), 'wb') as fp:
+    with open(os.path.join(pathlib.Path(geoip_db).parent.parent, bin_file), 'wb') as fp:
         pickle.dump(geodata, fp)
 
     return geodata
@@ -26,12 +26,17 @@ def test(geodata:list):
     print(geodata[10])
     print(geodata[1000])
     print(geodata[10000])
+    print(geodata[-1])
 
 
 def main():
     this_dir = pathlib.Path(__file__).parent.resolve()
     geoip_db = os.path.join(this_dir, 'geodata/IP2LOCATION-LITE-DB3.CSV')
-    geodata = create(geoip_db)
+    geodata = create(geoip_db, 'geoip.bin')
+    test(geodata)
+    
+    geoip_db = os.path.join(this_dir, 'geodata/IP2LOCATION-LITE-DB3.IPV6.CSV')
+    geodata = create(geoip_db, 'geoip_v6.bin')
     test(geodata)
 
 

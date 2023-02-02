@@ -24,8 +24,8 @@ if not token:
     token = 'YOUR_SECRET_TOKEN_IF_YOU_WANT_TO_CONFIG_HERE'
     try_download = False
 
-database_code = "DB3LITECSV"
-downlaod_url = f"https://www.ip2location.com/download/?token={token}&file={database_code}"
+database_codes = ["DB3LITECSV", "DB3LITECSVIPV6"]
+download_urls = [f"https://www.ip2location.com/download/?token={token}&file={code}" for code in database_codes]
 
 # Geoip Service
 port = 22223

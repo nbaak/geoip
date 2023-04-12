@@ -26,11 +26,11 @@ def create_database():
 
     if os.path.exists(os.path.join(download_path, 'IP2LOCATION-LITE-DB3.CSV')):
         geoip_db = os.path.join(download_path, 'IP2LOCATION-LITE-DB3.CSV')
-        create_data.create(geoip_db)
+        create_data.create(geoip_db, 'geoip.bin')
         
     if os.path.exists(os.path.join(download_path, 'IP2LOCATION-LITE-DB3.IPV6.CSV')):
         geoip_db = os.path.join(download_path, 'IP2LOCATION-LITE-DB3.IPV6.CSV')
-        create_data.create(geoip_db)
+        create_data.create(geoip_db, 'geoip_v6.bin')
 
 
 if __name__ == '__main__':

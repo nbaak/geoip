@@ -33,6 +33,7 @@ class Geoip:
     def load_data(self) -> bool:
         self.data_v4 = self._load_data(self.file)
         self.data_v6 = self._load_data(self.file_v6)
+        return True
 
     def check_data(self):
         value = -1
@@ -84,7 +85,8 @@ class Geoip:
                 return {'code': current_data['code'], 'country': current_data['country'], 'region': current_data['region'], 'city': current_data['city'], 'ip': ip}
 
     def search(self, ip:str):
-        int_ip, version = self.ip_to_int(ip)
+        int_ip, version = self.ip_to_int(ip)        
+        
         int_ip_min = 0
         int_ip_max = 2 ** 32 - 1 if version == 4 else 2 ** 128 - 1
 
@@ -105,7 +107,11 @@ class Geoip:
             if int_ip >= current_data['start'] and int_ip <= current_data['stop']:
                 logging.info(f"finding {ip} took {trys} trys")
                 return {'code': current_data['code'], 'country': current_data['country'], 'region': current_data['region'], 'city': current_data['city'], 'ip': ip}
-
+            
+            # print("IP", int_ip)
+            # print("LB", data[lower_bounds[0]]['start'], data[lower_bounds[1]]['stop'])
+            # print("UB", data[upper_bounds[0]]['start'], data[upper_bounds[1]]['stop'])
+            
             if int_ip >= data[lower_bounds[0]]['start'] and int_ip <= data[lower_bounds[1]]['stop']:
                 # go left
                 center_index = ((lower_bounds[0] + center_index) // 2)
@@ -139,5 +145,4 @@ if __name__ == '__main__':
     ips = ['fe80::021b:77ff:fbd6:7860', '2001:4860:4860::8888', '2a02:8108:9c0:3788:754c:3142:cbdb:9ac', '2a02:2028:1038:1::34']
     for ip in ips:
         print(geoip.search(ip))
-
 

@@ -1,9 +1,11 @@
 FROM python:3.10.2
 
 RUN apt-get update && apt-get install -y cron nano
+
+COPY ./requirements.txt /tmp/
  
 RUN python -m pip install --upgrade pip
-RUN python -m pip install flask requests
+RUN python -m pip install -r /tmp/requirements.txt
 
 RUN mkdir /geoip && cd /geoip
 COPY ./src /geoip

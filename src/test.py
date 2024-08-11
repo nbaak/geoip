@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from Geoip import Geoip
+from geoip import Geoip
 import time
 import logging
 import sys

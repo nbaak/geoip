@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from flask import Flask, jsonify, request
-from Geoip import Geoip
+from geoip import Geoip
 import os
 import settings
 import secret_service

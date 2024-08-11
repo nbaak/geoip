@@ -56,12 +56,16 @@ class Geoip:
             return self.ipv6_to_int(ip), 6
 
         else:
-            return None
+            return None, None
 
     def ipv4_to_int(self, ip:str) -> int:
-        a3, a2, a1, a0 = ip.split('.')
-        a3, a2, a1, a0 = int(a3), int(a2), int(a1), int(a0)
-        return 256 ** 3 * a3 + 256 ** 2 * a2 + 256 * a1 + a0
+        ip_parts = ip.split('.')
+        if len(ip_parts) == 4:
+            ip_parts = list(map(int, ip_parts))            
+            a3, a2, a1, a0 = ip_parts
+            return 256 ** 3 * a3 + 256 ** 2 * a2 + 256 * a1 + a0
+        
+        return None
 
     def ipv6_to_int(self, ip:str) -> int:
         try:
@@ -85,7 +89,10 @@ class Geoip:
                 return {'code': current_data['code'], 'country': current_data['country'], 'region': current_data['region'], 'city': current_data['city'], 'ip': ip}
 
     def search(self, ip:str):
-        int_ip, version = self.ip_to_int(ip)        
+        int_ip, version = self.ip_to_int(ip)   
+        
+        if int_ip == None: return None
+        if version == None: return None     
         
         int_ip_min = 0
         int_ip_max = 2 ** 32 - 1 if version == 4 else 2 ** 128 - 1

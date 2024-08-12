@@ -30,10 +30,14 @@ class Geoip:
             logging.error(f"{e}, {file}")
             return None
 
-    def load_data(self) -> bool:
+    def load_data(self) -> tuple:
         self.data_v4 = self._load_data(self.file)
+        ipv4_loaded = True if self.data_v4 else False
+        
         self.data_v6 = self._load_data(self.file_v6)
-        return True
+        ipv6_loaded = True if self.data_v6 else False
+        
+        return ipv4_loaded, ipv6_loaded
 
     def check_data(self):
         value = -1

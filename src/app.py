@@ -7,28 +7,34 @@ import secret_service
 from datetime import datetime
 
 geoip = Geoip(os.path.join(settings.THIS_PATH, 'geoip.bin'))
+# if you want ti support ipv6
+# geoip = Geoip(os.path.join(settings.THIS_PATH, 'geoip.bin'), os.path.join(settings.THIS_PATH, 'geoip_v6.bin'))
 app = Flask(__name__)
 
 
 # app:variables
-last_update = None
+app_variables = {
+    "last_update": None,
+    "ipv4": None,
+    "ipv6": None
+    }
 
 
 @app.route("/version")
-def version():
-    app_data = {
-        "last_update": last_update,        
-        }
-    
-    return jsonify(app_data)
+def version():  
+    return jsonify(app_variables)
 
 
 @app.route('/update/<string:secret>')
 def update(secret):
     global last_update
     if secret_service.verify(secret, settings.SECRET_FILE):
-        if geoip.load_data():
-            last_update = datetime.now()
+        ipv4, ipv6 = geoip.load_data()
+        if ipv4 or ipv6:
+            app_variables["last_update"] = datetime.now()
+            app_variables["ipv4"] = ipv4
+            app_variables["ipv6"] = ipv6
+            
             return "Data loaded", 200
 
     return "ERROR", 404

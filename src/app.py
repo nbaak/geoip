@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, redirect
 from geoip import Geoip
 import os
 import settings
@@ -11,7 +11,6 @@ geoip = Geoip(os.path.join(settings.THIS_PATH, 'geoip.bin'))
 # geoip = Geoip(os.path.join(settings.THIS_PATH, 'geoip.bin'), os.path.join(settings.THIS_PATH, 'geoip_v6.bin'))
 app = Flask(__name__)
 
-
 # app:variables
 app_variables = {
     "last_update": None,
@@ -21,7 +20,12 @@ app_variables = {
 
 
 @app.route("/version")
-def version():  
+def version(): 
+    return redirect("/info", 302)
+
+
+@app.route("/info")
+def info(): 
     return jsonify(app_variables)
 
 

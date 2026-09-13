@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from flask import Flask, jsonify, request, redirect
 from geoip import Geoip
+from ip import is_valid_ip
 import os
 import settings
 import secret_service
@@ -15,17 +16,17 @@ app = Flask(__name__)
 app_variables = {
     "last_update": None,
     "ipv4": None,
-    "ipv6": None
+    "ipv6": None,
     }
 
 
 @app.route("/version")
-def version(): 
+def version():
     return redirect("/info", 302)
 
 
 @app.route("/info")
-def info(): 
+def info():
     return jsonify(app_variables)
 
 
@@ -38,7 +39,7 @@ def update(secret):
             app_variables["last_update"] = datetime.now()
             app_variables["ipv4"] = ipv4
             app_variables["ipv6"] = ipv6
-            
+
             return "Data loaded", 200
 
     return "ERROR", 404
@@ -53,9 +54,19 @@ def find(ip):
         elif 'REMOTE_ADDR' in request.environ:
             ip = request.remote_addr
 
+    if not is_valid_ip(ip):
+        return "ERROR", 404
+
     data = geoip.search(ip)
 
     return jsonify(data)
+
+
+@app.route("/", defaults={"what_ever": ""})
+@app.route("/<path:what_ever>")
+def whatever(what_ever:str) -> None:
+    # TODO: log them all!
+    return "ERROR XXXXXX", 440
 
 
 if __name__ == "__main__":

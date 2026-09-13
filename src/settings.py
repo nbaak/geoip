@@ -4,8 +4,11 @@ import pathlib
 
 
 def read_token(tokenfile):
-    with open(tokenfile, 'r') as f:
-        return f.read()
+    if os.path.exists(tokenfile):
+        with open(tokenfile, 'r') as f:
+            return f.read()
+    else:
+        return None
 
 
 # Overall

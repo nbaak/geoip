@@ -3,6 +3,7 @@
 *.bin
 *.csv
 *.CSV
+*.zip
 *.secret
 *.token
 __pycache__

@@ -5,14 +5,12 @@ import time
 import logging
 import sys
 from tqdm import tqdm
+from itertools import product
 
 
 def ip_generator():
-    for a in range(256):
-        for b in range(256):
-            for c in range(256):
-                for d in range(256):
-                    yield f"{d}.{c}.{b}.{a}"
+    for octets in product(range(256), repeat=4):
+        yield ".".join(map(str, reversed(octets)))
 
 
 def test_geoip_basic(geoip:Geoip):

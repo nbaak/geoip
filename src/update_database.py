@@ -86,7 +86,14 @@ def parse_arguments() -> argparse.Namespace:
         action="store_true",
         help="Compile databases only.",
     )
-
+    
+    group.add_argument(
+        "-s",
+        "--send-data-to-service",
+        action="store_true",
+        help="Sends compiled date to web service.",
+    )
+    
     return parser.parse_args()
 
 
@@ -103,8 +110,8 @@ def main():
         unpack_data(download_path, only=True)
         return
 
-    if args.compile_only:
-        compile_data(download_path, only=True)
+    if args.send_data_to_service:
+        send_to_service()
         return
     
     download_data(download_path)
